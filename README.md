@@ -1,2 +1,81 @@
-# MLI_GSL-rl
-Gulf of St. Lawrence reference library for metabarcoding studies
+GSL reference library
+================
+
+Reference sequences for metabarcording species assignments in the Gulf
+of St. Lawrence
+
+**Main author:** Audrey Bourret  
+**Affiliation:** Fisheries and Oceans Canada (DFO)  
+**Group:** Laboratory of genomics  
+**Location:** Maurice Lamontagne Institute  
+**Affiliated publication:**  
+**Contact:** <audrey.bourret@dfo-mpo.gc.ca>
+
+-   [Objective](#objective)
+-   [Summary](#summary)
+-   [Status](#status)
+-   [Contents](#contents)
+    -   [Subsections within contents](#subsections-within-contents)
+-   [Methods](#methods)
+    -   [Subsections within methods](#subsections-within-methods)
+-   [Main Results](#main-results)
+-   [Requirements](#requirements)
+-   [Caveats](#caveats)
+-   [Uncertainty](#uncertainty)
+-   [Acknowledgements](#acknowledgements)
+-   [References](#references)
+
+## Objective
+
+The main goal/purpose of the project.
+
+## Summary
+
+Description of the project, provide some background and context. What
+are the inputs and outputs?
+
+## Status
+
+Is the project finished or being developed? Choose from: “Completed”,
+“Ongoing-improvements”, “In-development”
+
+## Contents
+
+Describe the contents of the repository. Are there multiple scripts or
+directories? What are there purpose and how do they relate to each
+other? \#\#\# Subsections within contents Use subsections to describe
+the purpose of each script if warranted.
+
+## Methods
+
+What methods were used to achieve the purpose? This should be detailed
+as possible. \#\#\# Subsections within methods Often useful to organise
+the methods under multiple subheadings.
+
+## Main Results
+
+*Optional section.* Links to important figures.
+
+## Requirements
+
+*Optional section.* List the input data requirements or software
+requirements to successfully execute the code.
+
+## Caveats
+
+Anything other users should be aware of including gaps in the input or
+output data and warnings about appropriate use.
+
+## Uncertainty
+
+*Optional section.* Is there some uncertainty associated with the
+output? Assumptions that were made?
+
+## Acknowledgements
+
+*Optional section.* List any contributors and acknowledge relevant
+people or institutions
+
+## References
+
+*Optional section.*
