@@ -1,60 +1,47 @@
-GSL reference library
+GSL-rl : Gulf of St. Lawrence reference library
 ================
 
 Reference sequences for metabarcording species assignments in the Gulf
 of St. Lawrence
 
-**Main author:** Audrey Bourret  
+**Main maintainer:** Audrey Bourret  
 **Affiliation:** Fisheries and Oceans Canada (DFO)  
 **Group:** Laboratory of genomics  
 **Location:** Maurice Lamontagne Institute  
-**Affiliated publication:**  
+**Affiliated publication:** Maximizing the reliability and the number of
+species assignments in metabarcoding studies (in prepatation). Bourret,
+A., Nozères, C., Parent, É., Parent, G.J.  
 **Contact:** <audrey.bourret@dfo-mpo.gc.ca>
 
--   [Objective](#objective)
--   [Summary](#summary)
+-   [Description of GSL-rl](#description-of-gsl-rl)
 -   [Status](#status)
 -   [Contents](#contents)
     -   [Subsections within contents](#subsections-within-contents)
--   [Methods](#methods)
-    -   [Subsections within methods](#subsections-within-methods)
--   [Main Results](#main-results)
 -   [Requirements](#requirements)
 -   [Caveats](#caveats)
 -   [Uncertainty](#uncertainty)
 -   [Acknowledgements](#acknowledgements)
 -   [References](#references)
 
-## Objective
+## Description of GSL-rl
 
-The main goal/purpose of the project.
+GSL-rl is a collection of curated and annotated sequences for performing
+genetic assignments using COI barcodes for marine fauna in the Gulf of
+St. Lawrence. It actually covered 651 targeted species, and sequences
+are currently available for **439 species**.
 
-## Summary
-
-Description of the project, provide some background and context. What
-are the inputs and outputs?
+![](README_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
 ## Status
 
-Is the project finished or being developed? Choose from: “Completed”,
-“Ongoing-improvements”, “In-development”
+“Ongoing-improvements”
 
 ## Contents
 
 Describe the contents of the repository. Are there multiple scripts or
-directories? What are there purpose and how do they relate to each
+directories? What are their purpose and how do they relate to each
 other? \#\#\# Subsections within contents Use subsections to describe
 the purpose of each script if warranted.
-
-## Methods
-
-What methods were used to achieve the purpose? This should be detailed
-as possible. \#\#\# Subsections within methods Often useful to organise
-the methods under multiple subheadings.
-
-## Main Results
-
-*Optional section.* Links to important figures.
 
 ## Requirements
 
