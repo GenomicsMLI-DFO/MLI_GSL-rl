@@ -12,10 +12,11 @@ library(tidyverse)
 
 # Read the dataset
 
-metadata   <- readr::read_csv2("GSL-rl_COI/GSL-rl_COI_metadata2.csv")
-DNA.leray  <- Biostrings::readDNAStringSet("GSL-rl_COI/GSL-rl_COI_Leray313pb_450taxa_1040seq.fasta")
-DNA.folmer <- Biostrings::readDNAStringSet("GSL-rl_COI/GSL-rl_COI_Folmer650pb_450taxa_1304seq.fasta")
+metadata   <- readr::read_csv2("GSL-rl_COI/GSL-rl_COI_metadata.csv")
+#DNA.leray  <- Biostrings::readDNAStringSet("GSL-rl_COI/GSL-rl_COI_Leray313pb_450taxa_1040seq.fasta")
+#DNA.folmer <- Biostrings::readDNAStringSet("GSL-rl_COI/GSL-rl_COI_Folmer650pb_450taxa_1304seq.fasta")
 
+#Biostrings::writeXStringSet(DNA.folmer.cor, "GSL-rl_COI/GSL-rl_COI_Folmer650pb_450taxa_1304seq.fasta")
 
 #
 
@@ -46,7 +47,7 @@ __Contact:__      audrey.bourret@dfo-mpo.gc.ca
 - [References](#references)
 
 
-## Description of GSL-rl
+## Description of the GSL-rl
 
 GSL-rl is a collection of curated and annotated sequences for performing genetic assignments using COI barcodes for marine fauna in the Gulf of St. Lawrence. It actually covered `r metadata %>% dplyr::filter(WithinNWA == "Yes", Level == "Species") %>%  nrow()` targeted species, and sequences are currently available for **`r metadata %>% dplyr::filter(WithinNWA == "Yes", Level == "Species", Validity != "No sequences available") %>%  nrow()` species**.
 
@@ -64,7 +65,7 @@ metadata %>% dplyr::filter(WithinNWA == "Yes", Level == "Species") %>%
                     values = c(colorBlindBlack8[4], colorBlindBlack8[5], colorBlindBlack8[2],"gray"))+
 
   geom_text(aes(y = 0.1, label = paste0("n=",SUM)), vjust = 4, col = "black", cex = 3) +
-  facet_wrap(~phylum, nrow = 2) + theme_void() +
+  facet_wrap(~phylum, nrow = 3) + theme_void() +
   theme(legend.title = element_blank(),
         legend.position = "bottom",
         plot.background = element_rect(fill = "white", colour = NA),
@@ -77,28 +78,77 @@ metadata %>% dplyr::filter(WithinNWA == "Yes", Level == "Species") %>%
 "Ongoing-improvements"
 
 ## Contents
-Describe the contents of the repository. Are there multiple scripts or directories? What are their purpose and how do they relate to each other?
-### Subsections within contents
-Use subsections to describe the purpose of each script if warranted.
 
+### Folder structure
 
-
-```{r eval=FALSE, include=FALSE}
-
-DNA.folmer.cor <- DNA.folmer %>% stringr::str_remove_all("-") %>% Biostrings::DNAStringSet()
-
-summary(DNA.folmer.cor@ranges@width)
-
-
-stringr::str_count(DNA.folmer.cor, "N") %>% summary()
-
-
-summary(stringr::str_count(DNA.folmer.cor, "N") /DNA.folmer.cor@ranges@width * 100)
-
-
-sd(stringr::str_count(DNA.folmer.cor, "N") /DNA.folmer.cor@ranges@width * 100
-   )
 ```
+.
+├── GSL-rl_COI     # Main folder containing reference sequences for COI 
+└── README.md
+```
+
+### GSL-rl COI
+
+Two fasta files are available, one for the full fragment (~650 pb; Folmer) and another one cut to fit common smaller metabarcoding region (~313 pb; Leray). The smaller fragment is also composed of less sequences because exact duplicated sequences were removed.
+
+- GSL-rl_COI_Folmer650pb_450taxa_1304seq.fasta  
+- GSL-rl_COI_Leray313pb_450taxa_1040seq.fasta
+
+```{r}
+DNA.folmer <- Biostrings::readDNAStringSet("GSL-rl_COI/GSL-rl_COI_Folmer650pb_450taxa_1304seq.fasta")
+DNA.folmer
+```
+
+Sequence name follows this nomenclature:  *BOLD/NCBI Unique ID* _ Root _  *Kingdom* _ *Phylum* _ *Class* _ *Order* _  *Family* _ *Genus* _ *Species* 
+
+
+```{r}
+names(DNA.folmer)[c(1, 10, 100)]
+
+```
+
+IDtaxa trained dataset 
+
+
+Metadata included the species rank category, that can be retrieve easily.
+
+```{r message=FALSE, warning=FALSE}
+metadata   <- readr::read_csv2("GSL-rl_COI/GSL-rl_COI_metadata.csv")
+
+metadata %>% dplyr::filter(str_detect(Name, "Ammodytes")) %>% dplyr::select(Name, SEQavailable, BIN, SPsharingBIN, Validity) 
+
+metadata %>% dplyr::filter(family == "Asteriidae") %>% dplyr::select(Name, SEQavailable, BIN, SPsharingBIN, SPmissingSEQ.genus, Validity) 
+
+
+```
+
+The species rank category can be explore and add as a layer of information on metabarcoding results.
+
+```{r echo=FALSE, fig.height=4, message=FALSE, warning=FALSE}
+
+metadata %>% dplyr::filter(WithinNWA == "Yes", 
+                           Level == "Species",
+                           phylum == "Porifera"#,
+                           #Validity != "No sequences available"
+                           ) %>% #head() %>% 
+  mutate( Validity = factor(Validity, levels = c("Reliable",  "Unreliable - BIN sharing","Unreliable - gaps", "No sequences available"))) %>% 
+    ggplot(aes(y = "0", x = Name, fill = Validity)) +
+ geom_point(pch = 21, cex = 3) + 
+   facet_grid( phylum ~ order,  space = "free", scale = "free") + 
+  theme_bw() +  
+  scale_fill_manual(name = "Species detection category", 
+                    breaks =  c("Reliable",  "Unreliable - BIN sharing","Unreliable - gaps", "No sequences available"),
+                    values = c(colorBlindBlack8[4], colorBlindBlack8[5], colorBlindBlack8[2],"gray"))+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5),
+        axis.text.y = element_blank(),
+        strip.text.x = element_text(angle = 90),
+        axis.title = element_blank(),
+        legend.position = "bottom")
+          
+
+                      
+```
+
 
 
 ## Requirements
