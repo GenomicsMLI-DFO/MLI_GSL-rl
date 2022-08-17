@@ -12,7 +12,9 @@ library(tidyverse)
 
 # Read the dataset
 
-metadata   <- readr::read_csv2("GSL-rl_COI/GSL-rl_COI_metadata.csv")
+metadata   <- readr::read_csv("GSL-rl_COI/GSL-rl_COI_metadata.csv")
+
+#write_csv(metadata, "GSL-rl_COI/GSL-rl_COI_metadata.csv")
 #DNA.leray  <- Biostrings::readDNAStringSet("GSL-rl_COI/GSL-rl_COI_Leray313pb_450taxa_1040seq.fasta")
 #DNA.folmer <- Biostrings::readDNAStringSet("GSL-rl_COI/GSL-rl_COI_Folmer650pb_450taxa_1304seq.fasta")
 
