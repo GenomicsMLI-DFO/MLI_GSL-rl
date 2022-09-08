@@ -29,7 +29,11 @@ colorBlindBlack8  <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
 
 ```
 
-Reference sequences for metabarcording species assignments in the Gulf of St. Lawrence
+Reference sequences for marine species assignments in the Gulf of St. Lawrence, at the COI loci. 
+
+**Currrent version : 1.0**  
+Check [this page](https://github.com/GenomicsMLI-DFO/MLI_GSL-rl/releases) for previous versions of GSL-rl.
+
 
 __Main maintainer:__  Audrey Bourret  
 __Affiliation:__  Fisheries and Oceans Canada (DFO)   
@@ -41,10 +45,10 @@ __Contact:__      audrey.bourret@dfo-mpo.gc.ca
 - [Description of GSL-rl](#description-of-gsl-rl)
 - [Status](#status)
 - [Contents](#contents)
-  + [Subsections within contents](#subsections-within-contents)
-- [Requirements](#requirements)
+  + [Folder structure](#folder-structure)
+  + [GSL-rl COI](#gsl-rl-coi)
+- [Assignment examples](#assignment-examples)
 - [Caveats](#caveats)
-- [Uncertainty](#uncertainty)
 - [Acknowledgements](#acknowledgements)
 - [References](#references)
 
@@ -75,6 +79,7 @@ metadata %>% dplyr::filter(WithinNWA == "Yes", Level == "Species") %>%
   
 ```
 
+The initial list of species is based on a published checklist based on 4 sources [(Nozères 2017)](https://doi.org/10.13140/rg.2.2.10056.62727) and comprised more than 2000 marine species potentially present within the Gulf of St. Lawrence. The ultimate goal of GSL-rl is to coverall these species in the future.
 
 ## Status
 "Ongoing-improvements"
@@ -86,6 +91,7 @@ metadata %>% dplyr::filter(WithinNWA == "Yes", Level == "Species") %>%
 ```
 .
 ├── GSL-rl_COI     # Main folder containing reference sequences for COI 
+├── Examples       # Example datasets 
 └── README.md
 ```
 
@@ -93,8 +99,8 @@ metadata %>% dplyr::filter(WithinNWA == "Yes", Level == "Species") %>%
 
 Two fasta files are available, one for the full fragment (~650 pb; Folmer) and another one cut to fit common smaller metabarcoding region (~313 pb; Leray). The smaller fragment is also composed of less sequences because exact duplicated sequences were removed.
 
-- GSL-rl_COI_Folmer650pb_450taxa_1304seq.fasta  
-- GSL-rl_COI_Leray313pb_450taxa_1040seq.fasta
+- [GSL-rl_COI_Folmer650pb_450taxa_1304seq.fasta](GSL-rl_COI/GSL-rl_COI_Folmer650pb_450taxa_1304seq.fasta)  
+- [GSL-rl_COI_Leray313pb_450taxa_1040seq.fasta](GSL-rl_COI/GSL-rl_COI_Leray313pb_450taxa_1040seq)
 
 ```{r}
 DNA.folmer <- Biostrings::readDNAStringSet("GSL-rl_COI/GSL-rl_COI_Folmer650pb_450taxa_1304seq.fasta")
@@ -109,13 +115,10 @@ names(DNA.folmer)[c(1, 10, 100)]
 
 ```
 
-IDtaxa trained dataset 
-
-
 Metadata included the species rank category, that can be retrieve easily.
 
 ```{r message=FALSE, warning=FALSE}
-metadata   <- readr::read_csv2("GSL-rl_COI/GSL-rl_COI_metadata.csv")
+metadata   <- readr::read_csv("GSL-rl_COI/GSL-rl_COI_metadata.csv")
 
 metadata %>% dplyr::filter(str_detect(Name, "Ammodytes")) %>% dplyr::select(Name, SEQavailable, BIN, SPsharingBIN, Validity) 
 
@@ -153,21 +156,82 @@ metadata %>% dplyr::filter(WithinNWA == "Yes",
 
 
 
-## Requirements
-*Optional section.* List the input data requirements or software requirements to successfully execute the code.
+## Assignment examples
+
+### ID-taxa
+
+**Step 1 :** Create a training set out of GSL-rl. 
+
+```{r message=FALSE, warning=FALSE}
+library(DECIPHER)
+
+# TaxID : Training the classifier -------------------------------------------------
+
+# train the classifier
+
+set.seed(111) # to get the same result everytimes
+
+DNA.leray <- Biostrings::readDNAStringSet("GSL-rl_COI/GSL-rl_COI_Leray313pb_450taxa_1040seq.fasta")
+DNA.leray
+
+trainingSet.leray <- DECIPHER::LearnTaxa(DNA.leray,
+                                         names(DNA.leray)
+                                         )
+
+set.seed(NULL)
+
+# This group is already known as being problemation
+trainingSet.leray$problemGroups
+
+# If there is problematic sequences, we should do something
+
+plot(trainingSet.leray)
+```
+
+**Step 2 :** Performed genetic assignments. 
+
+
+```{r}
+
+ASV <- readDNAStringSet(filepath = "./02_Examples/ASV_example_leray.fasta")
+names(ASV) 
+
+# Remove gaps
+ASV <- RemoveGaps(ASV,
+             removeGaps = "all",
+             processors = 1)
+
+
+# Very high confidence
+ids.60 <- DECIPHER::IdTaxa(ASV,
+              trainingSet.leray,
+              type="extended",
+              strand="top",
+              bootstraps = 100,
+              threshold=60,
+              processors=1)
+
+ids.60
+
+```
 
 
 ## Caveats
-Anything other users should be aware of including gaps in the input or output data and warnings about appropriate use.
+Like any other reference library, this one is not perfect. Users should consider these aspects in their interpretation of their results when using GSL-rl:
 
-
-## Uncertainty
-*Optional section.* Is there some uncertainty associated with the output? Assumptions that were made?
+- It covers species from the Gulf St. Lawrence
+- It covers only a small fraction of marine diversity within the GSL
+- Ranking category could change for better or even worst over times
+- Always considere a comparison of species assignemnts with another reference library
 
 
 ## Acknowledgements
-*Optional section.* List any contributors and acknowledge relevant people or institutions
-
+Eric Parent, Geneviève Parent, Grégoire Cortial and Jade Larivière for their inputs while developing the GSL-rl. Claude Nozères for the continuous species revision. 
 
 ## References
-*Optional section.*
+
+Murali A, Bhargava A, Wright ES (2018) IDTAXA: a novel approach for accurate taxonomic classification of microbiome sequences. Microbiome 6: 140. https://doi.org/10.1186/s40168-018-0521-5 
+
+Nozères C (2017) Preliminary checklist of marine animal species of the Gulf of St. Lawrence, Canada, based on 4 sources. https://doi.org/10.13140/RG.2.2.10056.62727 
+
+Wright ES (2016) Using DECIPHER v2.0 to analyze big biological sequence data in R. R Journal 8: 352–359. https://doi.org/10.32614/rj-2016-025 
