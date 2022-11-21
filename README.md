@@ -13,9 +13,11 @@ previous versions of GSL-rl.
 **Affiliation:** Fisheries and Oceans Canada (DFO)  
 **Group:** Laboratory of genomics  
 **Location:** Maurice Lamontagne Institute  
-**Affiliated publication:** Maximizing the reliability and the number of
-species assignments in metabarcoding studies (in prepatation). Bourret,
-A., Nozères, C., Parent, É., Parent, G.J.  
+**Affiliated publication:** [Maximizing the reliability and the number
+of species assignments in metabarcoding studies
+(2022)](https://www.biorxiv.org/content/10.1101/2022.11.17.513905v1).
+Bourret, A., Nozères, C., Parent, É., Parent, G.J. bioRxiv
+2022.11.17.513905; doi: <https://doi.org/10.1101/2022.11.17.513905>  
 **Contact:** <audrey.bourret@dfo-mpo.gc.ca>
 
 -   [Description of GSL-rl](#description-of-gsl-rl)
@@ -176,7 +178,7 @@ trainingSet.leray <- DECIPHER::LearnTaxa(DNA.leray,
 
     ## ================================================================================
     ## 
-    ## Time difference of 9.66 secs
+    ## Time difference of 9.33 secs
 
 ``` r
 set.seed(NULL)
@@ -198,7 +200,7 @@ plot(trainingSet.leray)
 **Step 2 :** Performed genetic assignments.
 
 ``` r
-ASV <- readDNAStringSet(filepath = "./02_Examples/ASV_example_leray.fasta")
+ASV <- readDNAStringSet(filepath = "./Examples/ASV_example_leray.fasta")
 names(ASV) 
 ```
 
@@ -233,15 +235,15 @@ ids.60
     ##   A test set of class 'Taxa' with length 10
     ##      confidence name                 taxon
     ##  [1]        20% ASV_1                Root; unclassified_Root...                 
-    ##  [2]        20% ASV_2                Root; unclassified_Root...                 
-    ##  [3]        23% ASV_3                Root; unclassified_Root...                 
+    ##  [2]        19% ASV_2                Root; unclassified_Root...                 
+    ##  [3]        22% ASV_3                Root; unclassified_Root...                 
     ##  [4]        20% ASV_4                Root; unclassified_Root...                 
-    ##  [5]        23% ASV_5                Root; unclassified_Root...                 
-    ##  [6]        21% ASV_6                Root; unclassified_Root...                 
-    ##  [7]        26% ASV_7                Root; unclassified_Root...                 
+    ##  [5]        21% ASV_5                Root; unclassified_Root...                 
+    ##  [6]        22% ASV_6                Root; unclassified_Root...                 
+    ##  [7]        25% ASV_7                Root; unclassified_Root...                 
     ##  [8]        97% ASV_8                Root; Animalia; Arthropoda; Hexanauplia;...
     ##  [9]        23% ASV_9                Root; unclassified_Root...                 
-    ## [10]        23% ASV_10               Root; unclassified_Root...
+    ## [10]        22% ASV_10               Root; unclassified_Root...
 
 ## Caveats
 
@@ -257,9 +259,8 @@ using GSL-rl:
 
 ## Acknowledgements
 
-Eric Parent, Geneviève Parent, Grégoire Cortial and Jade Larivière for
-their inputs while developing the GSL-rl. Claude Nozères for the
-continuous species revision.
+Grégoire Cortial and Jade Larivière for their inputs while developing
+the GSL-rl.
 
 ## References
 

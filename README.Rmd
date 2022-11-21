@@ -39,7 +39,7 @@ __Main maintainer:__  Audrey Bourret
 __Affiliation:__  Fisheries and Oceans Canada (DFO)   
 __Group:__        Laboratory of genomics   
 __Location:__     Maurice Lamontagne Institute  
-__Affiliated publication:__  Maximizing the reliability and the number of species assignments in metabarcoding studies (in prepatation). Bourret, A., Nozères, C., Parent, É., Parent, G.J.  
+__Affiliated publication:__  [Maximizing the reliability and the number of species assignments in metabarcoding studies (2022)](https://www.biorxiv.org/content/10.1101/2022.11.17.513905v1). Bourret, A., Nozères, C., Parent, É., Parent, G.J. bioRxiv 2022.11.17.513905; doi: https://doi.org/10.1101/2022.11.17.513905  
 __Contact:__      audrey.bourret@dfo-mpo.gc.ca
 
 - [Description of GSL-rl](#description-of-gsl-rl)
@@ -193,7 +193,7 @@ plot(trainingSet.leray)
 
 ```{r}
 
-ASV <- readDNAStringSet(filepath = "./02_Examples/ASV_example_leray.fasta")
+ASV <- readDNAStringSet(filepath = "./Examples/ASV_example_leray.fasta")
 names(ASV) 
 
 # Remove gaps
@@ -226,7 +226,7 @@ Like any other reference library, this one is not perfect. Users should consider
 
 
 ## Acknowledgements
-Eric Parent, Geneviève Parent, Grégoire Cortial and Jade Larivière for their inputs while developing the GSL-rl. Claude Nozères for the continuous species revision. 
+Grégoire Cortial and Jade Larivière for their inputs while developing the GSL-rl. 
 
 ## References
 
