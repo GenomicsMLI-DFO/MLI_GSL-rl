@@ -252,10 +252,10 @@ consider these aspects in their interpretation of their results when
 using GSL-rl:
 
 -   It covers species from the Gulf St. Lawrence
--   It covers only a small fraction of marine diversity within the GSL
--   Ranking category could change for better or even worst over times
--   Always considere a comparison of species assignemnts with another
-    reference library
+-   It covers a fraction of marine diversity within the GSL
+-   Ranking category could change for better or worst over times
+-   Consider a comparison of species assignemnts with another
+    resource
 
 ## Acknowledgements
 
